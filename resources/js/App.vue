@@ -1,7 +1,9 @@
 <template>
     <v-app>
         <Sidebar v-if="loggedIn" />
-        <Navbar />
+        <Navbar v-if="!($router.currentRoute.name == 'login' 
+            || $router.currentRoute.name == 'register')" 
+        />
 
         <v-content>
             <v-container fluid>

@@ -1951,6 +1951,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -1974,6 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+//
 //
 //
 //
@@ -2090,14 +2093,92 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'login'
+  name: 'login',
+  data: function data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      }
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['authLogIn']), {
+    login: function login() {
+      this.authLogIn(this.form);
+    }
+  })
 });
 
 /***/ }),
@@ -2111,14 +2192,109 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'register'
+  name: 'register',
+  data: function data() {
+    return {
+      form: {
+        name: null,
+        email: null,
+        password: null,
+        password_confirmation: null
+      }
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['authRegister']), {
+    register: function register() {
+      this.authRegister(this.form);
+    }
+  })
 });
 
 /***/ }),
@@ -4032,7 +4208,12 @@ var render = function() {
     [
       _vm.loggedIn ? _c("Sidebar") : _vm._e(),
       _vm._v(" "),
-      _c("Navbar"),
+      !(
+        _vm.$router.currentRoute.name == "login" ||
+        _vm.$router.currentRoute.name == "register"
+      )
+        ? _c("Navbar")
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "v-content",
@@ -4067,7 +4248,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-app-bar",
-    { staticClass: "black", attrs: { app: "", dark: "" } },
+    {
+      staticClass: "light-blue darken-4",
+      attrs: { fixed: "", app: "", dark: "" }
+    },
     [
       _c("v-spacer"),
       _vm._v(" "),
@@ -4223,16 +4407,136 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-container",
+            { staticClass: "fill-height", attrs: { fluid: "" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { align: "center", justify: "center" } },
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", sm: "8", md: "4" } },
+                    [
+                      _c(
+                        "v-card",
+                        { staticClass: "elevation-12" },
+                        [
+                          _c(
+                            "v-toolbar",
+                            { attrs: { color: "primary", dark: "", flat: "" } },
+                            [
+                              _c("v-toolbar-title", [_vm._v("Login form")]),
+                              _vm._v(" "),
+                              _c("v-spacer")
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-form",
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Email Address",
+                                      "prepend-icon": "mdi-email",
+                                      type: "email"
+                                    },
+                                    model: {
+                                      value: _vm.form.email,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "email", $$v)
+                                      },
+                                      expression: "form.email"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Password",
+                                      "prepend-icon": "mdi-lock",
+                                      type: "password"
+                                    },
+                                    model: {
+                                      value: _vm.form.password,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "password", $$v)
+                                      },
+                                      expression: "form.password"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                [
+                                  _vm._v(
+                                    "\n                            Need an account? Register "
+                                  ),
+                                  _c(
+                                    "router-link",
+                                    { attrs: { to: { name: "register" } } },
+                                    [_vm._v("here.")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: { click: _vm.login }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Login\n                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("This is the login page")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -4254,16 +4558,172 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-container",
+            { staticClass: "fill-height", attrs: { fluid: "" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { align: "center", justify: "center" } },
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", sm: "8", md: "4" } },
+                    [
+                      _c(
+                        "v-card",
+                        { staticClass: "elevation-12" },
+                        [
+                          _c(
+                            "v-toolbar",
+                            { attrs: { color: "primary", dark: "", flat: "" } },
+                            [
+                              _c("v-toolbar-title", [
+                                _vm._v("Registration Form")
+                              ]),
+                              _vm._v(" "),
+                              _c("v-spacer")
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-form",
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Name",
+                                      "prepend-icon": "mdi-account",
+                                      type: "text"
+                                    },
+                                    model: {
+                                      value: _vm.form.name,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "name", $$v)
+                                      },
+                                      expression: "form.name"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Email Address",
+                                      "prepend-icon": "mdi-email",
+                                      type: "email"
+                                    },
+                                    model: {
+                                      value: _vm.form.email,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "email", $$v)
+                                      },
+                                      expression: "form.email"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Password",
+                                      "prepend-icon": "mdi-lock",
+                                      type: "password"
+                                    },
+                                    model: {
+                                      value: _vm.form.password,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "password", $$v)
+                                      },
+                                      expression: "form.password"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Password",
+                                      "prepend-icon": "mdi-lock",
+                                      type: "password"
+                                    },
+                                    model: {
+                                      value: _vm.form.password_confirmation,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "password_confirmation",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.password_confirmation"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                [
+                                  _vm._v(
+                                    "\n                            Already have an account? Login \n                            "
+                                  ),
+                                  _c(
+                                    "router-link",
+                                    { attrs: { to: { name: "login" } } },
+                                    [_vm._v("here.")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: { click: _vm.register }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Register\n                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("This is the register page")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -58098,57 +58558,153 @@ var state = {
 var getters = {
   loggedIn: function loggedIn(state) {
     return state.token !== null;
+  },
+  getUser: function getUser(state) {
+    return state.user;
   }
 };
 var actions = {
   /**
-   * Log in user.
-   * @return void
+   * Log in user and retrieves 
+   * an access token.
    */
-  logIn: function logIn(_ref, credentials) {
-    var commit, response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logIn$(_context) {
+  authLogIn: function authLogIn(_ref, credentials) {
+    var commit, dispatch, response, data;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function authLogIn$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            commit = _ref.commit;
-            _context.next = 3;
-            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_2__["url"], "/api/auth/login")));
-
-          case 3:
-            response = _context.sent;
+            commit = _ref.commit, dispatch = _ref.dispatch;
+            _context.prev = 1;
+            _context.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_2__["url"], "/api/auth/login"), {
+              email: credentials.email,
+              password: credentials.password
+            }));
 
           case 4:
+            response = _context.sent;
+            data = response.data;
+            dispatch('storeToken', data.access_token);
+            console.log(response);
+            _context.next = 13;
+            break;
+
+          case 10:
+            _context.prev = 10;
+            _context.t0 = _context["catch"](1);
+            console.log(_context.t0.response);
+
+          case 13:
           case "end":
             return _context.stop();
+        }
+      }
+    }, null, null, [[1, 10]]);
+  },
+
+  /**
+   * Stores the access token in 
+   * a local storage.
+   */
+  storeToken: function storeToken(_ref2, token) {
+    var commit = _ref2.commit;
+
+    if (token !== null) {
+      localStorage.setItem('access_token', token);
+      commit('setToken', token);
+    }
+  },
+
+  /**
+   * Checks if the user is 
+   * currently authenticated.
+   * &
+   * Checks if access token is
+   * stored in a local storage.
+   */
+  checkAuth: function checkAuth(_ref3) {
+    var commit, token;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function checkAuth$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            commit = _ref3.commit;
+            token = localStorage.getItem('access_token');
+
+            if (token !== null) {
+              commit('setToken', token);
+            }
+
+          case 3:
+          case "end":
+            return _context2.stop();
         }
       }
     });
   },
 
   /**
-   * Log out user.
-   * @return void
+   * Log out user and destroys
+   * the access token.
    */
-  logout: function logout(_ref2) {
+  authLogOut: function authLogOut(_ref4) {
     var commit, dispatch, response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context2) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function authLogOut$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            commit = _ref2.commit, dispatch = _ref2.dispatch;
-            _context2.next = 3;
+            commit = _ref4.commit, dispatch = _ref4.dispatch;
+            _context3.next = 3;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_2__["url"], "/api/auth/login")));
 
           case 3:
-            response = _context2.sent;
+            response = _context3.sent;
 
           case 4:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
     });
+  },
+
+  /**
+   * Register a user.
+   */
+  authRegister: function authRegister(_ref5, form) {
+    var commit, response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function authRegister$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            commit = _ref5.commit;
+            _context4.prev = 1;
+            _context4.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_2__["url"], "/api/auth/register"), {
+              name: form.name,
+              email: form.email,
+              password: form.password,
+              password_confirmation: form.password_confirmation
+            }));
+
+          case 4:
+            response = _context4.sent;
+            console.log(response);
+            _context4.next = 11;
+            break;
+
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](1);
+            console.log(_context4.t0.response);
+
+          case 11:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, null, [[1, 8]]);
   }
 };
 var mutations = {

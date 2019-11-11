@@ -1,8 +1,9 @@
 <template>
     <v-app-bar
+        fixed
         app
         dark
-        class="black"
+        class="light-blue darken-4"
     >
 
     <v-spacer></v-spacer>

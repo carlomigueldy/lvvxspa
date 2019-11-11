@@ -1,15 +1,26 @@
 <template>
-    <div>
-        <router-link :to="{ name: 'home' }">Home</router-link>
-        <router-link :to="{ name: 'login' }">Login</router-link>
-        <router-link :to="{ name: 'register' }">Register</router-link>
-        
-        <router-view></router-view>
-    </div>
+    <v-app>
+        <Sidebar v-if="loggedIn" />
+        <Navbar />
+
+        <v-content>
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-export default {
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import { mapGetters } from 'vuex'
 
+export default {
+    components: {
+        Sidebar,
+        Navbar,
+    },
+    computed: mapGetters(['loggedIn'])
 }
 </script>

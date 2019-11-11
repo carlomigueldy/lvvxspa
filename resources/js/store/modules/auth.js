@@ -64,10 +64,11 @@ const actions = {
      * Checks if access token is
      * stored in a local storage.
      */
-    async checkAuth({ commit }) {
+    async checkAuth({ commit, dispatch }) {
         const token = localStorage.getItem('access_token')
         if (token !== null) {
             commit('setToken', token)
+            dispatch('getAuthUser')
         }
     },
 
@@ -118,6 +119,8 @@ const actions = {
             const response = await axios.post(`${url}/api/auth/me`, {}, {
                 headers: { 'Authorization': `Bearer ${state.token}` }
             })
+
+            commit('setUser', response.data)
             console.log(response.data)
         } catch (err) {
             console.log(err.response)
@@ -128,6 +131,7 @@ const actions = {
 const mutations = {
     setToken: (state, token) => state.token = token,
     removeToken: (state) => state.token = null,
+    setUser: (state, user) => state.user = user,
 }
 
 export default {

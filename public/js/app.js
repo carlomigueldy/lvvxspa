@@ -2053,6 +2053,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -2086,8 +2087,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Sidebar'
+  name: 'Sidebar',
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getUser'])
 });
 
 /***/ }),
@@ -4405,11 +4419,37 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "v-list-item",
+        { attrs: { "two-line": "" } },
+        [
+          _c("v-list-item-avatar", [
+            _c("img", {
+              attrs: {
+                src:
+                  "https://media.mmo-champion.com/images/news/2018/february/WoWIcon12.jpg"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-list-item-content",
+            [
+              _c("v-list-item-title", [_vm._v(_vm._s(_vm.getUser.name))]),
+              _vm._v(" "),
+              _c("v-list-item-subtitle", [_vm._v("Logged In")])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-list",
         [
           _c(
             "v-list-item",
-            { attrs: { to: { name: "home" } } },
+            { attrs: { to: { name: "dashboard" } } },
             [
               _c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-home")])], 1),
               _vm._v(" "),
@@ -58757,16 +58797,17 @@ var actions = {
    * stored in a local storage.
    */
   checkAuth: function checkAuth(_ref4) {
-    var commit, token;
+    var commit, dispatch, token;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function checkAuth$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            commit = _ref4.commit;
+            commit = _ref4.commit, dispatch = _ref4.dispatch;
             token = localStorage.getItem('access_token');
 
             if (token !== null) {
               commit('setToken', token);
+              dispatch('getAuthUser');
             }
 
           case 3:
@@ -58878,21 +58919,22 @@ var actions = {
 
           case 4:
             response = _context5.sent;
+            commit('setUser', response.data);
             console.log(response.data);
-            _context5.next = 11;
+            _context5.next = 12;
             break;
 
-          case 8:
-            _context5.prev = 8;
+          case 9:
+            _context5.prev = 9;
             _context5.t0 = _context5["catch"](1);
             console.log(_context5.t0.response);
 
-          case 11:
+          case 12:
           case "end":
             return _context5.stop();
         }
       }
-    }, null, null, [[1, 8]]);
+    }, null, null, [[1, 9]]);
   }
 };
 var mutations = {
@@ -58901,6 +58943,9 @@ var mutations = {
   },
   removeToken: function removeToken(state) {
     return state.token = null;
+  },
+  setUser: function setUser(state, user) {
+    return state.user = user;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

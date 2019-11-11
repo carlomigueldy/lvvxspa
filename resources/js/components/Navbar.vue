@@ -25,15 +25,36 @@
             Register
         </v-btn>
     </span>
+    <span v-else>
+        <v-btn
+            @click="$router.push({ name: 'dashboard' })"
+            text
+        >
+            Dashboard
+        </v-btn>
+        <v-btn
+            @click="logout"
+            text
+        >
+            Logout
+        </v-btn>
+    </span>
 
     </v-app-bar>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'Navbar',
-    computed: mapGetters(['loggedIn'])
+    computed: mapGetters(['loggedIn']),
+    methods: {
+        logout() {
+            this.authLogOut()
+        },
+        
+        ...mapActions(['authLogOut']),
+    }
 }
 </script>

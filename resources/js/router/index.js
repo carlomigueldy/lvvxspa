@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import home from '../views/home'
 import login from '../views/login'
 import register from '../views/register'
+import dashboard from '../views/dashboard'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ export default new VueRouter({
             path: '/register',
             name: 'register',
             component: register,
-        }
+        },
+        {
+            path: '/dashboard',
+            name: 'dashboard',
+            component: dashboard,
+        },
     ],
 })

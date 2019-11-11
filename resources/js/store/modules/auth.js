@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router'
 import { url } from '../url'
 
 const state = {
@@ -16,7 +17,7 @@ const actions = {
      * Log in user and retrieves 
      * an access token.
      */
-    async authLogIn({ commit, dispatch }, credentials) {
+    async authLogIn({ dispatch }, credentials) {
         try {
             const response = await axios.post(`${url}/api/auth/login`, {
                 email: credentials.email,
@@ -25,6 +26,8 @@ const actions = {
             
             const data = response.data
             dispatch('storeToken', data.access_token)
+            dispatch('getAuthUser')
+            router.push({ name: 'dashboard' })
             console.log(response)
         } catch (err) {
             console.log(err.response)
@@ -39,6 +42,18 @@ const actions = {
         if (token !== null) {
             localStorage.setItem('access_token', token)
             commit('setToken', token)
+        }
+    },
+
+    /**
+     * Destroys the token saved in 
+     * local storage.
+     */
+    destroyToken({ commit }) {
+        const token = localStorage.getItem('access_token')
+        if (token !== null) {
+            localStorage.removeItem('access_token')
+            commit('removeToken')
         }
     },
 
@@ -60,14 +75,21 @@ const actions = {
      * Log out user and destroys
      * the access token.
      */
-    async authLogOut({ commit, dispatch }) {
-        const response = await axios.post(`${url}/api/auth/login`)
+    async authLogOut({ dispatch }) {
+        try {
+            const response = await axios.post(`${url}/api/auth/logout`, {}, {
+                headers: { 'Authorization': `Bearer ${state.token}` }
+            })
+            dispatch('destroyToken')
+        } catch (err) {
+            console.log(err.response)
+        }
     },
 
     /**
      * Register a user.
      */
-    async authRegister({ commit }, form) {
+    async authRegister({ commit, dispatch }, form) {
         try {
             const response = await axios.post(`${url}/api/auth/register`, {
                 name: form.name,
@@ -75,7 +97,28 @@ const actions = {
                 password: form.password,
                 password_confirmation: form.password_confirmation,
             })
-            console.log(response)
+
+            const credentials = {
+                email: form.email,
+                password: form.password,
+            }
+
+            dispatch('authLogIn', credentials)
+        } catch (err) {
+            console.log(err.response)
+        }
+    },
+
+    /**
+     * Gets the current authenticaed 
+     * user in API.
+     */
+    async getAuthUser({ commit }) {
+        try {
+            const response = await axios.post(`${url}/api/auth/me`, {}, {
+                headers: { 'Authorization': `Bearer ${state.token}` }
+            })
+            console.log(response.data)
         } catch (err) {
             console.log(err.response)
         }

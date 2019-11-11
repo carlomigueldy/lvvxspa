@@ -56,7 +56,7 @@
 
                             <div>
                                 Already have an account? Login 
-                                <router-link :to="{ name: 'login' }">here.</router-link>
+                                <router-link :to="{ name: 'login' }">here</router-link>.
                             </div>
                         </v-card-text>
                         <v-card-actions>

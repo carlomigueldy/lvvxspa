@@ -18,6 +18,32 @@ class AuthController extends Controller
     }
 
     /**
+     * Registers a new user.
+     */
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|unique:users',
+            'email' => 'required|email',
+            'password' => 'required|confirmed'
+        ]);
+        
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return response()->json([
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'message' => 'You have been registered successfully!',
+        ]);
+    }
+
+    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse

@@ -58840,15 +58840,16 @@ var actions = {
           case 4:
             response = _context3.sent;
             dispatch('destroyToken');
-            _context3.next = 11;
+            _context3.next = 12;
             break;
 
           case 8:
             _context3.prev = 8;
             _context3.t0 = _context3["catch"](1);
+            dispatch('destroyToken');
             console.log(_context3.t0.response);
 
-          case 11:
+          case 12:
           case "end":
             return _context3.stop();
         }

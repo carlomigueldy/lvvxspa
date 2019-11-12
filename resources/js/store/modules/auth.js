@@ -81,8 +81,10 @@ const actions = {
             const response = await axios.post(`${url}/api/auth/logout`, {}, {
                 headers: { 'Authorization': `Bearer ${state.token}` }
             })
+
             dispatch('destroyToken')
         } catch (err) {
+            dispatch('destroyToken')
             console.log(err.response)
         }
     },

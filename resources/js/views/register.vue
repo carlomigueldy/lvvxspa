@@ -48,7 +48,7 @@
 
                                 <v-text-field
                                     v-model="form.password_confirmation"
-                                    label="Password"
+                                    label="Confirm Password"
                                     prepend-icon="mdi-lock"
                                     type="password"
                                 />

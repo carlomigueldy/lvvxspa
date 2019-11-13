@@ -1,11 +1,14 @@
 <template>
     <div>
-        <h1>This is the dashboard</h1>
+        <h1>Welcome, {{ getUser.name }}.</h1>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    name: 'dashboard'
+    name: 'dashboard',
+    computed: mapGetters(['getUser']),
 }
 </script>

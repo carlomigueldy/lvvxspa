@@ -1953,6 +1953,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1961,7 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
     Sidebar: _components_Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
     Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['loggedIn']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['loggedIn', 'isLoading']),
   methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['checkAuth']),
   created: function created() {
     this.checkAuth();
@@ -2115,14 +2123,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'dashboard'
+  name: 'dashboard',
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getUser'])
 });
 
 /***/ }),
@@ -4286,6 +4297,17 @@ var render = function() {
         "v-content",
         [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-overlay",
+        { attrs: { value: _vm.isLoading } },
+        [
+          _c("v-progress-circular", {
+            attrs: { color: "primary", indeterminate: "", size: "64" }
+          })
+        ],
+        1
       )
     ],
     1
@@ -4490,16 +4512,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", [_vm._v("Welcome, " + _vm._s(_vm.getUser.name) + ".")])
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("This is the dashboard")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -4576,9 +4593,12 @@ var render = function() {
                         [
                           _c(
                             "v-toolbar",
-                            { attrs: { color: "primary", dark: "", flat: "" } },
+                            {
+                              staticClass: "light-blue darken-4",
+                              attrs: { flat: "", dark: "" }
+                            },
                             [
-                              _c("v-toolbar-title", [_vm._v("Login form")]),
+                              _c("v-toolbar-title", [_vm._v("Login")]),
                               _vm._v(" "),
                               _c("v-spacer")
                             ],
@@ -4728,11 +4748,12 @@ var render = function() {
                         [
                           _c(
                             "v-toolbar",
-                            { attrs: { color: "primary", dark: "", flat: "" } },
+                            {
+                              staticClass: "light-blue darken-4",
+                              attrs: { flat: "", dark: "" }
+                            },
                             [
-                              _c("v-toolbar-title", [
-                                _vm._v("Registration Form")
-                              ]),
+                              _c("v-toolbar-title", [_vm._v("Register")]),
                               _vm._v(" "),
                               _c("v-spacer")
                             ],
@@ -58708,7 +58729,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   user: {},
-  token: null
+  token: null,
+  loading: false
 };
 var getters = {
   loggedIn: function loggedIn(state) {
@@ -58716,6 +58738,23 @@ var getters = {
   },
   getUser: function getUser(state) {
     return state.user;
+  },
+  isLoading: function isLoading(state) {
+    return state.loading;
+  }
+};
+var mutations = {
+  setToken: function setToken(state, token) {
+    return state.token = token;
+  },
+  removeToken: function removeToken(state) {
+    return state.token = null;
+  },
+  setUser: function setUser(state, user) {
+    return state.user = user;
+  },
+  setLoading: function setLoading(state, _boolean) {
+    return state.loading = _boolean;
   }
 };
 var actions = {
@@ -58724,20 +58763,21 @@ var actions = {
    * an access token.
    */
   authLogIn: function authLogIn(_ref, credentials) {
-    var dispatch, response, data;
+    var commit, dispatch, response, data;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function authLogIn$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            dispatch = _ref.dispatch;
-            _context.prev = 1;
-            _context.next = 4;
+            commit = _ref.commit, dispatch = _ref.dispatch;
+            commit('setLoading', true);
+            _context.prev = 2;
+            _context.next = 5;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_3__["url"], "/api/auth/login"), {
               email: credentials.email,
               password: credentials.password
             }));
 
-          case 4:
+          case 5:
             response = _context.sent;
             data = response.data;
             dispatch('storeToken', data.access_token);
@@ -58745,21 +58785,23 @@ var actions = {
             _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
               name: 'dashboard'
             });
+            commit('setLoading', false);
             console.log(response);
-            _context.next = 15;
+            _context.next = 18;
             break;
 
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](1);
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](2);
+            commit('setLoading', false);
             console.log(_context.t0.response);
 
-          case 15:
+          case 18:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[1, 12]]);
+    }, null, null, [[2, 14]]);
   },
 
   /**
@@ -58786,6 +58828,9 @@ var actions = {
     if (token !== null) {
       localStorage.removeItem('access_token');
       commit('removeToken');
+      _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'login'
+      });
     }
   },
 
@@ -58823,38 +58868,41 @@ var actions = {
    * the access token.
    */
   authLogOut: function authLogOut(_ref5) {
-    var dispatch, response;
+    var commit, dispatch, response;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function authLogOut$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            dispatch = _ref5.dispatch;
-            _context3.prev = 1;
-            _context3.next = 4;
+            commit = _ref5.commit, dispatch = _ref5.dispatch;
+            commit('setLoading', true);
+            _context3.prev = 2;
+            _context3.next = 5;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_3__["url"], "/api/auth/logout"), {}, {
               headers: {
                 'Authorization': "Bearer ".concat(state.token)
               }
             }));
 
-          case 4:
+          case 5:
             response = _context3.sent;
             dispatch('destroyToken');
-            _context3.next = 12;
+            commit('setLoading', false);
+            _context3.next = 15;
             break;
 
-          case 8:
-            _context3.prev = 8;
-            _context3.t0 = _context3["catch"](1);
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](2);
             dispatch('destroyToken');
+            commit('setLoading', false);
             console.log(_context3.t0.response);
 
-          case 12:
+          case 15:
           case "end":
             return _context3.stop();
         }
       }
-    }, null, null, [[1, 8]]);
+    }, null, null, [[2, 10]]);
   },
 
   /**
@@ -58867,8 +58915,9 @@ var actions = {
         switch (_context4.prev = _context4.next) {
           case 0:
             commit = _ref6.commit, dispatch = _ref6.dispatch;
-            _context4.prev = 1;
-            _context4.next = 4;
+            commit('setLoading', true);
+            _context4.prev = 2;
+            _context4.next = 5;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_3__["url"], "/api/auth/register"), {
               name: form.name,
               email: form.email,
@@ -58876,27 +58925,29 @@ var actions = {
               password_confirmation: form.password_confirmation
             }));
 
-          case 4:
+          case 5:
             response = _context4.sent;
             credentials = {
               email: form.email,
               password: form.password
             };
+            commit('setLoading', false);
             dispatch('authLogIn', credentials);
-            _context4.next = 12;
+            _context4.next = 15;
             break;
 
-          case 9:
-            _context4.prev = 9;
-            _context4.t0 = _context4["catch"](1);
+          case 11:
+            _context4.prev = 11;
+            _context4.t0 = _context4["catch"](2);
+            commit('setLoading', false);
             console.log(_context4.t0.response);
 
-          case 12:
+          case 15:
           case "end":
             return _context4.stop();
         }
       }
-    }, null, null, [[1, 9]]);
+    }, null, null, [[2, 11]]);
   },
 
   /**
@@ -58904,49 +58955,42 @@ var actions = {
    * user in API.
    */
   getAuthUser: function getAuthUser(_ref7) {
-    var commit, response;
+    var commit, dispatch, response;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAuthUser$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            commit = _ref7.commit;
-            _context5.prev = 1;
-            _context5.next = 4;
+            commit = _ref7.commit, dispatch = _ref7.dispatch;
+            commit('setLoading', true);
+            _context5.prev = 2;
+            _context5.next = 5;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_url__WEBPACK_IMPORTED_MODULE_3__["url"], "/api/auth/me"), {}, {
               headers: {
                 'Authorization': "Bearer ".concat(state.token)
               }
             }));
 
-          case 4:
+          case 5:
             response = _context5.sent;
             commit('setUser', response.data);
+            commit('setLoading', false);
             console.log(response.data);
-            _context5.next = 12;
+            _context5.next = 16;
             break;
 
-          case 9:
-            _context5.prev = 9;
-            _context5.t0 = _context5["catch"](1);
+          case 11:
+            _context5.prev = 11;
+            _context5.t0 = _context5["catch"](2);
+            commit('setLoading', false);
+            dispatch('destroyToken');
             console.log(_context5.t0.response);
 
-          case 12:
+          case 16:
           case "end":
             return _context5.stop();
         }
       }
-    }, null, null, [[1, 9]]);
-  }
-};
-var mutations = {
-  setToken: function setToken(state, token) {
-    return state.token = token;
-  },
-  removeToken: function removeToken(state) {
-    return state.token = null;
-  },
-  setUser: function setUser(state, user) {
-    return state.user = user;
+    }, null, null, [[2, 11]]);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

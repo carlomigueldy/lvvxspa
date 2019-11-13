@@ -5,11 +5,20 @@ import { url } from '../url'
 const state = {
     user: {},
     token: null,
+    loading: false,
 }
 
 const getters = {
     loggedIn: state => state.token !== null,
     getUser: state => state.user,
+    isLoading: state => state.loading,
+}
+
+const mutations = {
+    setToken: (state, token) => state.token = token,
+    removeToken: (state) => state.token = null,
+    setUser: (state, user) => state.user = user,
+    setLoading: (state, boolean) => state.loading = boolean,
 }
 
 const actions = {
@@ -17,7 +26,8 @@ const actions = {
      * Log in user and retrieves 
      * an access token.
      */
-    async authLogIn({ dispatch }, credentials) {
+    async authLogIn({ commit, dispatch }, credentials) {
+        commit('setLoading', true)
         try {
             const response = await axios.post(`${url}/api/auth/login`, {
                 email: credentials.email,
@@ -28,8 +38,10 @@ const actions = {
             dispatch('storeToken', data.access_token)
             dispatch('getAuthUser')
             router.push({ name: 'dashboard' })
+            commit('setLoading', false)
             console.log(response)
         } catch (err) {
+            commit('setLoading', false)
             console.log(err.response)
         }
     },
@@ -54,6 +66,7 @@ const actions = {
         if (token !== null) {
             localStorage.removeItem('access_token')
             commit('removeToken')
+            router.push({ name: 'login' })
         }
     },
 
@@ -76,15 +89,18 @@ const actions = {
      * Log out user and destroys
      * the access token.
      */
-    async authLogOut({ dispatch }) {
+    async authLogOut({ commit, dispatch }) {
+        commit('setLoading', true)
         try {
             const response = await axios.post(`${url}/api/auth/logout`, {}, {
                 headers: { 'Authorization': `Bearer ${state.token}` }
             })
 
             dispatch('destroyToken')
+            commit('setLoading', false)
         } catch (err) {
             dispatch('destroyToken')
+            commit('setLoading', false)
             console.log(err.response)
         }
     },
@@ -93,6 +109,7 @@ const actions = {
      * Register a user.
      */
     async authRegister({ commit, dispatch }, form) {
+        commit('setLoading', true)
         try {
             const response = await axios.post(`${url}/api/auth/register`, {
                 name: form.name,
@@ -105,9 +122,11 @@ const actions = {
                 email: form.email,
                 password: form.password,
             }
-
+            
+            commit('setLoading', false)
             dispatch('authLogIn', credentials)
         } catch (err) {
+            commit('setLoading', false)
             console.log(err.response)
         }
     },
@@ -116,24 +135,22 @@ const actions = {
      * Gets the current authenticaed 
      * user in API.
      */
-    async getAuthUser({ commit }) {
+    async getAuthUser({ commit, dispatch }) {
+        commit('setLoading', true)
         try {
             const response = await axios.post(`${url}/api/auth/me`, {}, {
                 headers: { 'Authorization': `Bearer ${state.token}` }
             })
 
             commit('setUser', response.data)
+            commit('setLoading', false)
             console.log(response.data)
         } catch (err) {
+            commit('setLoading', false)
+            dispatch('destroyToken')
             console.log(err.response)
         }
     },
-}
-
-const mutations = {
-    setToken: (state, token) => state.token = token,
-    removeToken: (state) => state.token = null,
-    setUser: (state, user) => state.user = user,
 }
 
 export default {

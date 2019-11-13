@@ -16,11 +16,11 @@
                 >
                     <v-card class="elevation-12">
                         <v-toolbar
-                            color="primary"
-                            dark
                             flat
+                            dark
+                            class="light-blue darken-4"
                         >
-                            <v-toolbar-title>Login form</v-toolbar-title>
+                            <v-toolbar-title>Login</v-toolbar-title>
                             <v-spacer />
                         </v-toolbar>
                         <v-card-text>

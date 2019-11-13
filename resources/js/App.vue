@@ -10,6 +10,14 @@
                 <router-view></router-view>
             </v-container>
         </v-content>
+
+        <v-overlay :value="isLoading">
+            <v-progress-circular 
+                color="primary"
+                indeterminate 
+                size="64">
+            </v-progress-circular>
+        </v-overlay>
     </v-app>
 </template>
 
@@ -23,7 +31,7 @@ export default {
         Sidebar,
         Navbar,
     },
-    computed: mapGetters(['loggedIn']),
+    computed: mapGetters(['loggedIn', 'isLoading']),
     methods: mapActions(['checkAuth']),
     created() {
         this.checkAuth()

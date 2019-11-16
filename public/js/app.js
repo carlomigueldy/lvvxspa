@@ -1959,8 +1959,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -1994,6 +1992,20 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2106,10 +2118,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sidebar',
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getUser'])
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth'])
 });
 
 /***/ }),
@@ -2130,10 +2151,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'dashboard',
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getUser'])
+  name: 'dashboard'
 });
 
 /***/ }),
@@ -2175,13 +2200,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4293,11 +4311,7 @@ var render = function() {
         ? _c("Navbar")
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "v-content",
-        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
-        1
-      ),
+      _c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1),
       _vm._v(" "),
       _c(
         "v-overlay",
@@ -4342,6 +4356,10 @@ var render = function() {
       attrs: { fixed: "", app: "", dark: "" }
     },
     [
+      _vm.$router.currentRoute.name == "home"
+        ? _c("span", [_vm._v("\n    App\n")])
+        : _vm._e(),
+      _vm._v(" "),
       _c("v-spacer"),
       _vm._v(" "),
       !_vm.loggedIn
@@ -4362,21 +4380,56 @@ var render = function() {
             "span",
             [
               _c(
-                "v-btn",
+                "v-menu",
                 {
-                  attrs: { text: "" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.push({ name: "dashboard" })
+                  attrs: { "offset-y": "" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._g({ attrs: { icon: "" } }, on),
+                            [_c("v-icon", [_vm._v("mdi-dots-vertical")])],
+                            1
+                          )
+                        ]
+                      }
                     }
-                  }
+                  ])
                 },
-                [_vm._v("\n        Dashboard\n    ")]
-              ),
-              _vm._v(" "),
-              _c("v-btn", { attrs: { text: "" }, on: { click: _vm.logout } }, [
-                _vm._v("\n        Logout\n    ")
-              ])
+                [
+                  _vm._v(" "),
+                  _c(
+                    "v-list",
+                    [
+                      _c(
+                        "v-list-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.$router.push({ name: "dashboard" })
+                            }
+                          }
+                        },
+                        [_c("v-list-item-title", [_vm._v("Dashboard")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { on: { click: _vm.logout } },
+                        [_c("v-list-item-title", [_vm._v("Logout")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -4408,16 +4461,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-navigation-drawer",
-    {
-      attrs: {
-        dark: "",
-        app: "",
-        permanent: "",
-        overflow: "",
-        src:
-          "https://i.pinimg.com/originals/92/52/7f/92527f55b320493e49a2ecdb7dbe9336.jpg"
-      }
-    },
+    { attrs: { dark: "", app: "", permanent: "", overflow: "" } },
     [
       _c(
         "v-list-item",
@@ -4427,11 +4471,11 @@ var render = function() {
             { staticClass: "text-center" },
             [
               _c("v-list-item-title", { staticClass: "title" }, [
-                _vm._v("\n                Warcraft\n            ")
+                _vm._v("\n                App\n            ")
               ]),
               _vm._v(" "),
               _c("v-list-item-subtitle", [
-                _vm._v("\n                Wow is life\n            ")
+                _vm._v("\n                Subtitle\n            ")
               ])
             ],
             1
@@ -4445,20 +4489,15 @@ var render = function() {
         { attrs: { "two-line": "" } },
         [
           _c("v-list-item-avatar", [
-            _c("img", {
-              attrs: {
-                src:
-                  "https://media.mmo-champion.com/images/news/2018/february/WoWIcon12.jpg"
-              }
-            })
+            _c("img", { attrs: { src: "/img/default/default.png" } })
           ]),
           _vm._v(" "),
           _c(
             "v-list-item-content",
             [
-              _c("v-list-item-title", [_vm._v(_vm._s(_vm.getUser.name))]),
+              _c("v-list-item-title", [_vm._v(_vm._s(_vm.auth.user.name))]),
               _vm._v(" "),
-              _c("v-list-item-subtitle", [_vm._v("Logged In")])
+              _c("v-list-item-subtitle", [_vm._v(_vm._s(_vm.auth.role.name))])
             ],
             1
           )
@@ -4473,11 +4512,34 @@ var render = function() {
             "v-list-item",
             { attrs: { to: { name: "dashboard" } } },
             [
-              _c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-home")])], 1),
+              _c(
+                "v-list-item-icon",
+                [_c("v-icon", [_vm._v("mdi-view-dashboard-outline")])],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-list-item-content",
                 [_c("v-list-item-title", [_vm._v("Dashboard")])],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list-item",
+            { attrs: { to: { name: "products" } } },
+            [
+              _c(
+                "v-list-item-icon",
+                [_c("v-icon", [_vm._v("mdi-package-variant-closed")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [_c("v-list-item-title", [_vm._v("Products")])],
                 1
               )
             ],
@@ -4512,9 +4574,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Welcome, " + _vm._s(_vm.getUser.name) + ".")])
-  ])
+  return _c(
+    "v-content",
+    [
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", [_vm._v("Dashboard")]),
+          _vm._v(" "),
+          _c("v-card-text", [
+            _vm._v("\n            Welcome to your App Dashboard.\n        ")
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4570,121 +4646,109 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "v-container",
+    { attrs: { fluid: "" } },
     [
       _c(
-        "v-content",
+        "v-row",
+        { attrs: { align: "center", justify: "center" } },
         [
           _c(
-            "v-container",
-            { staticClass: "fill-height", attrs: { fluid: "" } },
+            "v-col",
+            { attrs: { cols: "12", sm: "8", md: "4" } },
             [
               _c(
-                "v-row",
-                { attrs: { align: "center", justify: "center" } },
+                "v-card",
+                { staticClass: "elevation-12" },
                 [
                   _c(
-                    "v-col",
-                    { attrs: { cols: "12", sm: "8", md: "4" } },
+                    "v-toolbar",
+                    {
+                      staticClass: "light-blue darken-4",
+                      attrs: { flat: "", dark: "" }
+                    },
+                    [
+                      _c("v-toolbar-title", [_vm._v("Login")]),
+                      _vm._v(" "),
+                      _c("v-spacer")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
                     [
                       _c(
-                        "v-card",
-                        { staticClass: "elevation-12" },
+                        "v-form",
                         [
-                          _c(
-                            "v-toolbar",
-                            {
-                              staticClass: "light-blue darken-4",
-                              attrs: { flat: "", dark: "" }
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Email Address",
+                              "prepend-icon": "mdi-email",
+                              type: "email"
                             },
-                            [
-                              _c("v-toolbar-title", [_vm._v("Login")]),
-                              _vm._v(" "),
-                              _c("v-spacer")
-                            ],
-                            1
-                          ),
+                            model: {
+                              value: _vm.form.email,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "email", $$v)
+                              },
+                              expression: "form.email"
+                            }
+                          }),
                           _vm._v(" "),
-                          _c(
-                            "v-card-text",
-                            [
-                              _c(
-                                "v-form",
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Email Address",
-                                      "prepend-icon": "mdi-email",
-                                      type: "email"
-                                    },
-                                    model: {
-                                      value: _vm.form.email,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.form, "email", $$v)
-                                      },
-                                      expression: "form.email"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Password",
-                                      "prepend-icon": "mdi-lock",
-                                      type: "password"
-                                    },
-                                    model: {
-                                      value: _vm.form.password,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.form, "password", $$v)
-                                      },
-                                      expression: "form.password"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                [
-                                  _vm._v(
-                                    "\n                            Need an account? Register \n                            "
-                                  ),
-                                  _c(
-                                    "router-link",
-                                    { attrs: { to: { name: "register" } } },
-                                    [_vm._v("here")]
-                                  ),
-                                  _vm._v(".\n                        ")
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-actions",
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "primary" },
-                                  on: { click: _vm.login }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Login\n                        "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Password",
+                              "prepend-icon": "mdi-lock",
+                              type: "password"
+                            },
+                            model: {
+                              value: _vm.form.password,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "password", $$v)
+                              },
+                              expression: "form.password"
+                            }
+                          })
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _vm._v(
+                            "\n                        Need an account? Register \n                        "
+                          ),
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "register" } } },
+                            [_vm._v("here")]
+                          ),
+                          _vm._v(".\n                    ")
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary" },
+                          on: { click: _vm.login }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Login\n                    "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -58733,11 +58797,11 @@ var state = {
   loading: false
 };
 var getters = {
+  auth: function auth(state) {
+    return state.user;
+  },
   loggedIn: function loggedIn(state) {
     return state.token !== null;
-  },
-  getUser: function getUser(state) {
-    return state.user;
   },
   isLoading: function isLoading(state) {
     return state.loading;
@@ -58782,10 +58846,10 @@ var actions = {
             data = response.data;
             dispatch('storeToken', data.access_token);
             dispatch('getAuthUser');
+            commit('setLoading', false);
             _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
               name: 'dashboard'
             });
-            commit('setLoading', false);
             console.log(response);
             _context.next = 18;
             break;

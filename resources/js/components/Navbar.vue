@@ -6,6 +6,10 @@
         class="light-blue darken-4"
     >
 
+    <span v-if="$router.currentRoute.name == 'home'">
+        App
+    </span>
+
     <v-spacer></v-spacer>
 
     <span
@@ -26,18 +30,28 @@
         </v-btn>
     </span>
     <span v-else>
-        <v-btn
-            @click="$router.push({ name: 'dashboard' })"
-            text
-        >
-            Dashboard
-        </v-btn>
-        <v-btn
-            @click="logout"
-            text
-        >
-            Logout
-        </v-btn>
+        <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+            <v-btn
+                v-on="on"
+                icon
+            >
+                <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+        </template>
+        <v-list>
+            <v-list-item
+                @click="$router.push({ name: 'dashboard' })"
+            >
+                <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+                @click="logout"
+            >
+                <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+        </v-list>
+        </v-menu>
     </span>
 
     </v-app-bar>

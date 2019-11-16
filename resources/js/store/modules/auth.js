@@ -9,8 +9,8 @@ const state = {
 }
 
 const getters = {
+    auth: state => state.user,
     loggedIn: state => state.token !== null,
-    getUser: state => state.user,
     isLoading: state => state.loading,
 }
 
@@ -37,8 +37,8 @@ const actions = {
             const data = response.data
             dispatch('storeToken', data.access_token)
             dispatch('getAuthUser')
-            router.push({ name: 'dashboard' })
             commit('setLoading', false)
+            router.push({ name: 'dashboard' })
             console.log(response)
         } catch (err) {
             commit('setLoading', false)

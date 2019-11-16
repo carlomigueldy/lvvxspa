@@ -5,11 +5,9 @@
             || $router.currentRoute.name == 'register')" 
         />
 
-        <v-content>
-            <v-container fluid>
-                <router-view></router-view>
-            </v-container>
-        </v-content>
+        <v-container fluid>
+            <router-view></router-view>
+        </v-container>
 
         <v-overlay :value="isLoading">
             <v-progress-circular 

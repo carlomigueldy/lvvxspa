@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '../views/home'
-import login from '../views/login'
-import register from '../views/register'
+import login from '../views/auth/login'
+import register from '../views/auth/register'
 import dashboard from '../views/dashboard'
+import products from '../views/products'
+import product_show from '../views/products/product_show'
 
 Vue.use(VueRouter)
 
@@ -30,5 +32,14 @@ export default new VueRouter({
             name: 'dashboard',
             component: dashboard,
         },
+        {
+            path: '/products',
+            name: 'products',
+            component: products,
+        },
+        {
+            path: '/products/:id',
+            component: product_show,
+        }
     ],
 })

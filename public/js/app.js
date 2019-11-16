@@ -2130,7 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sidebar',
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth'])
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth', 'user'])
 });
 
 /***/ }),

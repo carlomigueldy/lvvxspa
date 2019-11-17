@@ -4,12 +4,14 @@ import { url } from '../url'
 
 const state = {
     user: {},
+    role: {},
     token: null,
     loading: false,
 }
 
 const getters = {
     auth: state => state.user,
+    authRole: state => state.role,
     loggedIn: state => state.token !== null,
     isLoading: state => state.loading,
 }
@@ -19,6 +21,7 @@ const mutations = {
     removeToken: (state) => state.token = null,
     setUser: (state, user) => state.user = user,
     setLoading: (state, boolean) => state.loading = boolean,
+    serUserRole: (state, role) => state.role = role,
 }
 
 const actions = {
@@ -142,7 +145,8 @@ const actions = {
                 headers: { 'Authorization': `Bearer ${state.token}` }
             })
 
-            commit('setUser', response.data)
+            commit('setUser', response.data.user)
+            commit('serUserRole', response.data.role)
             commit('setLoading', false)
             console.log(response.data)
         } catch (err) {

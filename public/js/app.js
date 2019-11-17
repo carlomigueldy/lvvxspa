@@ -2119,18 +2119,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sidebar',
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth', 'user'])
+  data: function data() {
+    return {
+      routes: [{
+        name: 'dashboard',
+        icon: 'mdi-view-dashboard-outline',
+        title: 'Dashboard'
+      }, {
+        name: 'products',
+        icon: 'mdi-package-variant-closed',
+        title: 'Products'
+      }]
+    };
+  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth', 'authRole'])
 });
 
 /***/ }),
@@ -4548,9 +4553,9 @@ var render = function() {
           _c(
             "v-list-item-content",
             [
-              _c("v-list-item-title", [_vm._v(_vm._s(_vm.auth.user.name))]),
+              _c("v-list-item-title", [_vm._v(_vm._s(_vm.auth.name))]),
               _vm._v(" "),
-              _c("v-list-item-subtitle", [_vm._v(_vm._s(_vm.auth.role.name))])
+              _c("v-list-item-subtitle", [_vm._v(_vm._s(_vm.authRole.name))])
             ],
             1
           )
@@ -4560,45 +4565,26 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-list",
-        [
-          _c(
+        _vm._l(_vm.routes, function(route, index) {
+          return _c(
             "v-list-item",
-            { attrs: { to: { name: "dashboard" } } },
+            { key: index, attrs: { to: { name: route.name } } },
             [
               _c(
                 "v-list-item-icon",
-                [_c("v-icon", [_vm._v("mdi-view-dashboard-outline")])],
+                [_c("v-icon", [_vm._v(_vm._s(route.icon))])],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-list-item-content",
-                [_c("v-list-item-title", [_vm._v("Dashboard")])],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item",
-            { attrs: { to: { name: "products" } } },
-            [
-              _c(
-                "v-list-item-icon",
-                [_c("v-icon", [_vm._v("mdi-package-variant-closed")])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list-item-content",
-                [_c("v-list-item-title", [_vm._v("Products")])],
+                [_c("v-list-item-title", [_vm._v(_vm._s(route.title))])],
                 1
               )
             ],
             1
           )
-        ],
+        }),
         1
       )
     ],
@@ -58952,12 +58938,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   user: {},
+  role: {},
   token: null,
   loading: false
 };
 var getters = {
   auth: function auth(state) {
     return state.user;
+  },
+  authRole: function authRole(state) {
+    return state.role;
   },
   loggedIn: function loggedIn(state) {
     return state.token !== null;
@@ -58978,6 +58968,9 @@ var mutations = {
   },
   setLoading: function setLoading(state, _boolean) {
     return state.loading = _boolean;
+  },
+  serUserRole: function serUserRole(state, role) {
+    return state.role = role;
   }
 };
 var actions = {
@@ -59195,25 +59188,26 @@ var actions = {
 
           case 5:
             response = _context5.sent;
-            commit('setUser', response.data);
+            commit('setUser', response.data.user);
+            commit('serUserRole', response.data.role);
             commit('setLoading', false);
             console.log(response.data);
-            _context5.next = 16;
+            _context5.next = 17;
             break;
 
-          case 11:
-            _context5.prev = 11;
+          case 12:
+            _context5.prev = 12;
             _context5.t0 = _context5["catch"](2);
             commit('setLoading', false);
             dispatch('destroyToken');
             console.log(_context5.t0.response);
 
-          case 16:
+          case 17:
           case "end":
             return _context5.stop();
         }
       }
-    }, null, null, [[2, 11]]);
+    }, null, null, [[2, 12]]);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
